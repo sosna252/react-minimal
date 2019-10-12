@@ -1,7 +1,11 @@
 import React from 'react'
 
+const generateArray = (n) => Array.from({length: n}, (v, k) => k+1);
+
 const AppTitle = () => (   
-  <h2>AppTitle Component</h2>
+  "Lab1.ex1 = " + generateArray(10).toString()
    )
+
+console.log(generateArray(10))
 
 export default AppTitle
