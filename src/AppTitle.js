@@ -121,9 +121,9 @@ const AppTitle = () => (
   ]
 
 
-console.log(generateArray(10))
-console.log(generateRandomArray(10))
-console.log(NumberArray.filter(n => n>15))
-console.log(SquareRootArray(SquareArray))
+//console.log(generateArray(10))
+//console.log(generateRandomArray(10))
+//console.log(NumberArray.filter(n => n>15))
+//console.log(SquareRootArray(SquareArray))
 
 export default AppTitle

@@ -4,16 +4,18 @@ import ReactDOM from 'react-dom';
 class MyForm extends React.Component {
     constructor(props) {
       super(props);
-      this.state = { a: 0, b: 0 };
+      this.state = { a: 0, b: 0, counter: 0};
     }
     generateArray = (n) => Array.from({length: n}, (v, k) => k+1);
 
     myChangeHandler = (event) => {
       this.setState({a: event.target.value});
+      this.setState({counter: this.state.counter+1});
       console.log("Value changed a: " + event.target.value) 
     }
     myChangeHandler2 = (event) => {
         this.setState({b: event.target.value});
+        this.setState({counter: this.state.counter+1});
         console.log("Value changed b: " + event.target.value)
     }
     
@@ -25,24 +27,27 @@ class MyForm extends React.Component {
 
       console.log(x)   
       return x;  
-}
-    render() {
+    }
+    
+    render() {    
+      console.time("Render - " + this.state.counter);
       let x =[]
       if(parseInt(this.state.a,10)<this.state.b && parseInt(this.state.a,10)>0)
         {x = this.myFunction()}
+
       return (
         <form>       
         <input type='number'onChange={this.myChangeHandler}/>
         <input type='number'onChange={this.myChangeHandler2}/>
         <p>{x.toString()}</p>
+        {console.timeEnd("Render - " + this.state.counter)}        
         </form>
       );
     }
   }
   
-  ReactDOM.render(<MyForm />, document.getElementById('lab2'));
 
-//export default MyForm
+export default MyForm
 
 
 
