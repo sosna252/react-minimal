@@ -4,42 +4,50 @@ import ReactDOM from 'react-dom';
 class MyForm extends React.Component {
     constructor(props) {
       super(props);
-      this.state = { a: 0, b: 0, counter: 0};
+      this.state = { a: 0, b: 0, counter: 0, array: []};
     }
-    generateArray = (n) => Array.from({length: n}, (v, k) => k+1);
-
+    generateArray = (n, x) => Array.from({length: n}, (v, k) => k+x);
+    SquareRootArray = (array) => array.map(Math.sqrt);
+    
     myChangeHandler = (event) => {
-      this.setState({a: event.target.value});
+      let tmp = parseInt(event.target.value,10)
+      this.setState({a: tmp});
       this.setState({counter: this.state.counter+1});
+      if(this.state.b>tmp && tmp>0)
+        this.setState({array: this.generateArray(this.state.b-tmp+1,tmp)})
+      else
+        this.setState({array : []})
       console.log("Value changed a: " + event.target.value) 
     }
     myChangeHandler2 = (event) => {
-        this.setState({b: event.target.value});
+        let tmp = parseInt(event.target.value,10)
+        this.setState({b: tmp});
         this.setState({counter: this.state.counter+1});
+        if(this.state.a<tmp && this.state.a>0)
+          this.setState({array: this.generateArray(tmp-this.state.a+1,this.state.a)})
+        else
+          this.setState({array : []})
         console.log("Value changed b: " + event.target.value)
     }
     
-    myFunction =() => {
-      let tmp =parseInt(this.state.a,10)
-      const x = this.generateArray(this.state.b-tmp+1)
-      for(var i =0; i<x.length;i++)
-        x[i]=x[i]+parseInt(tmp,10)-1;
-
-      console.log(x)   
-      return x;  
+    myFunction = (event) => 
+    {
+      event.preventDefault()
+      this.setState({array: this.SquareRootArray(this.state.array)})
     }
-    
+
     render() {    
       console.time("Render - " + this.state.counter);
-      let x =[]
-      if(parseInt(this.state.a,10)<this.state.b && parseInt(this.state.a,10)>0)
-        {x = this.myFunction()}
+      let y =[]
 
       return (
         <form>       
         <input type='number'onChange={this.myChangeHandler}/>
         <input type='number'onChange={this.myChangeHandler2}/>
-        <p>{x.toString()}</p>
+        <p>{this.state.array.toString()}</p>
+
+        <button onClick = {this.myFunction}>Process array</button>
+
         {console.timeEnd("Render - " + this.state.counter)}        
         </form>
       );
